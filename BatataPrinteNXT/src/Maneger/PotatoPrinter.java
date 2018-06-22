@@ -123,16 +123,17 @@ private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 			break;
 		case NAO_DESENHA:
 			//saida +=" ";
-			pmp.acaoMoveCanetaSobe();;
+			pmp.acaoMoveCanetaSobe();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());			
 			
 			break;
 		case PROXIMA_LINHA:
-			pmp.acaoMovePapelFrente(1);;
+			pmp.acaoMovePapelFrente(1);
+			pmp.acaoEjetarPapel();
 			break;
 		case FINALIZA:
-			break;
-
+			pmp.acaoEjetarPapel();
+			break;			
 		default:
 			break;
 		}
