@@ -50,6 +50,10 @@ public class PotatoImagem {
 		}
 	}
 	
+	public void MatrizToArrayBite() {
+		
+	}
+	
 	/**
 	 * Carrega a imagem no buffer e transforma em uma Matriz PB, e gera uma copia com aimagem gerada
 	 */
@@ -61,7 +65,8 @@ public class PotatoImagem {
 	int h = imagem.getHeight();
 	int[][] matriz = new int[w][h] ;
 		
-	int[] pixels = imagem.getRGB(0, 0, w, h, null, 0, w);	
+	int[] pixels = imagem.getRGB(0, 0, w, h, null, 0, w);
+	//int[] pixelsCovertido = new i
 	
 	for (int col = 0; col < w; col++) {
 		  for (int lin = 0; lin < h; lin++) {
@@ -117,6 +122,8 @@ public class PotatoImagem {
 		}
 		return matriz;
 	}
+	
+
 
 
 	

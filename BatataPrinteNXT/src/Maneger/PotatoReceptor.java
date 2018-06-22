@@ -9,7 +9,7 @@ import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.NXTConnection;
 import lejos.nxt.comm.USB;
 
-public class PoatatoReceptor {
+public class PotatoReceptor {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -33,6 +33,10 @@ public class PoatatoReceptor {
 		      System.out.println(" write error "+e); 
 		    }
 
+	}
+	
+	public void moontaMatriz() {
+		
 	}
 
 }

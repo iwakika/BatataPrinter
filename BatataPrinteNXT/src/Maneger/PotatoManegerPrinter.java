@@ -28,6 +28,8 @@ public class PotatoManegerPrinter {
 	
 	private int valorLuzComPapel =100;
 	
+	private CanetaAcao statusAtualSobeDesce = CanetaAcao.SOBE;
+	
 	public enum CanetaAcao{
 		DESCE,
 		SOBE,
@@ -74,30 +76,62 @@ public class PotatoManegerPrinter {
 		motorPapel.rotate(rotate);
 	}
 	
+	/**
+	 * Move caneta o suficiente para sair do papel, se a caneta já estiver posicionada na posição não faz nada
+	 */
 	public void acaoMoveCanetaSobe() {
+				
+		if(statusAtualSobeDesce != CanetaAcao.SOBE) {
 		int rotateX = getRotateCanetaSobeDesce_VelX(velocidadeCanetaSobeDesce);		
 		rotacionaMotorCanetaSobeDesce(rotateX);
+		statusAtualSobeDesce = CanetaAcao.SOBE;
+		}
 		
 	}
 	public void acaoMoveCanetaDesce() {
+		if(statusAtualSobeDesce != CanetaAcao.DESCE) {
 		int rotateX = getRotateCanetaSobeDesce_VelX(velocidadeCanetaSobeDesce);		
 		rotacionaMotorCanetaSobeDesce(-rotateX);
+		statusAtualSobeDesce = CanetaAcao.DESCE;
+		}
 		
 	}
-	public void acaoMoveCanetaLateralDireita() {
-		int rotateX = getRotateCanetaLateral_VelX(velocidadeCanetaLateral);		
-		rotacionaMotorCanetaLateral(rotateX);
+	
+	
+/**
+ * Executa o movimen to lateral que foi definido para ser o proximo para escrita 
+ */
+	public void acaoMoveCanetaProximo(int un) {
+		acaoMoveCanetaLateralEsquerda(un);
+	}
+
+	
+	public void acaoMoveCanetaLateralDireita(int un) {
+		int rotateX = getRotateCanetaLateral_VelX(velocidadeCanetaLateral);		//calibrar  com base na velocidade
+		rotacionaMotorCanetaLateral(rotateX * un);
 		
 	}
-	public void acaoMoveCanetaLateralEsquerda() {
+	
+	public void acaoMoveCanetaLateralDireita(int un, int vel) {
+		
+		setVelocidadeCanetaLateral(vel);
+		int rotateX = getRotateCanetaLateral_VelX(velocidadeCanetaLateral);		//calibrar  com base na velocidade
+		rotacionaMotorCanetaLateral(rotateX * un);
+		
+	}
+	public void acaoMoveCanetaLateralEsquerda(int un) {
 		int rotateX = getRotateCanetaLateral_VelX(velocidadeCanetaLateral);		
-		rotacionaMotorCanetaLateral(-rotateX);
+		rotacionaMotorCanetaLateral(-rotateX * un);
 		
 	}
 	public void acaoMovePapelFrente(int  un) {
 		int rotateX = getRotatePapel_VelX(getRotatePapel_VelX(velocidadePapel));		
 		rotacionaMotorPapel(rotateX * un);
 	}
+	
+	
+	
+	
 	public void acaoMovePapelTraz(int un) {
 		int rotateX = getRotatePapel_VelX(getRotatePapel_VelX(velocidadePapel));		
 		rotacionaMotorPapel(-rotateX * un);
@@ -136,16 +170,18 @@ public class PotatoManegerPrinter {
 		return velocidadeCanetaLateral;
 	}
 	public void setVelocidadeCanetaLateral(int velocidadeCanetaLateral) {
+		this.motorCanetaLateral.setSpeed(velocidadeCanetaLateral);
 		this.velocidadeCanetaLateral = velocidadeCanetaLateral;
 	}
 	public int getVelocidadeCanetaSobeDesce() {
 		return velocidadeCanetaSobeDesce;
 	}
 	public void setVelocidadeCanetaSobeDesce(int velocidadeCanetaSobeDesce) {
+		this.motorCanetaSobeDesce.setSpeed(velocidadeCanetaSobeDesce);
 		this.velocidadeCanetaSobeDesce = velocidadeCanetaSobeDesce;
 	}
-
 	
+
 
 	
 	
