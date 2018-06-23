@@ -7,7 +7,7 @@ public class PotatoPrinterTeste {
 	
 	public static void main(String[] args) {
 		
-		PotatoImagem img = new PotatoImagem("MainShip1");
+		PotatoImagem img = new PotatoImagem("Xalakom");
 		int[][] matriz = img.transformaMatrizPB();  
 		
 		PotatoPrinterTeste ppt = new PotatoPrinterTeste(matriz);

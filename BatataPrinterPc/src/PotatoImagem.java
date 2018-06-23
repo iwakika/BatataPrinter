@@ -13,7 +13,7 @@ public class PotatoImagem {
 		// TODO Auto-generated method stub
 		
 		
-		PotatoImagem img = new PotatoImagem("MainShip1");
+		PotatoImagem img = new PotatoImagem("Xalakom");
 		int[][] matriz = img.transformaMatrizPB();  
 		
 		System.out.println(imprimeMatrizEmString(matriz));
@@ -61,9 +61,10 @@ public class PotatoImagem {
 	
 	carregarImagem();	 
 	
-	int w = imagem.getWidth();
+	
 	int h = imagem.getHeight();
-	int[][] matriz = new int[w][h] ;
+	int w = imagem.getWidth();
+	int[][] matriz = new int[h][w] ;
 		
 	int[] pixels = imagem.getRGB(0, 0, w, h, null, 0, w);
 	//int[] pixelsCovertido = new i
@@ -81,12 +82,13 @@ public class PotatoImagem {
 				  matriz[lin][col] = 0;
 				  pixels[w * lin + col] = Color.WHITE.getRGB();
 			  }
-		      
+		      //System.out.println("lin:" + lin + ", Col:" +col);
 		  }
 		}
 		imagem.setRGB(0, 0, w, h, pixels, 0, w);
 		try {
-			ImageIO.write(imagem, "PNG", new File(diretorio +"PB"+formato ));
+			
+			ImageIO.write(imagem, "PNG", new File(diretorio +"PB"+	formato ));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
