@@ -9,8 +9,9 @@ public class PotatoPrinter {
 		
 	}
 	
-	private int[][] matrizImpressao;
-	private PotatoManegerPrinter pmp = new PotatoManegerPrinter(); 
+	private static int[][] matrizImpressao;
+	private static PotatoManegerPrinter pmp; 
+	private static PotatoPrinter pp;
 	
 	
 	public enum EnumImprime{		
@@ -26,6 +27,18 @@ public class PotatoPrinter {
 		
 		}
 		
+	}
+	private PotatoPrinter(){
+		
+	}
+	
+	public static PotatoPrinter Inicialize(int[][] matriz){
+		if(pp == null){
+			pp = new PotatoPrinter();
+		}
+		matrizImpressao = matriz;
+		
+		return pp;
 	}
 	
 	

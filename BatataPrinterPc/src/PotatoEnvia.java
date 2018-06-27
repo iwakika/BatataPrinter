@@ -40,11 +40,18 @@ public class PotatoEnvia {
 	public PotatoEnvia(int tipoConexao) {
 	
 			this.tipoConexao = tipoConexao;
+			try {
+				conectar();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	
 	public void enviaDados(int[][] matriz){
 		try {
+			System.out.println("Inicia envio de dados");
 			 nxtComm.open(nxt);
 			 OutputStream dos = nxtComm.getOutputStream();
 			
@@ -62,7 +69,10 @@ public class PotatoEnvia {
 			 }
 			 
 			 dos.write(-1); //sinaliza final do envio
-			
+			 dos.flush();
+			 dos.close();
+			 System.out.println("Finaliza Envio de Dados");
+			 
 			
 		} catch (NXTCommException e) {
 			// TODO Auto-generated catch block
@@ -110,7 +120,7 @@ public class PotatoEnvia {
 	
 	
 	public void conectar() throws Exception{
-		
+		System.out.println("Inicia Conexão");
 		NXTInfo[] nxtInfo = null;
 		int cont = 0;
 		while(nxtInfo == null || cont == limiteTentativas ){
@@ -134,7 +144,7 @@ public class PotatoEnvia {
 		NXTInfo[] nxtInfo = null;
 		try {
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.USB);
-			nxtInfo = nxtComm.search("MYNXT");
+			nxtInfo = nxtComm.search("NXT");
 			//Se houver apenas um NXT conectado, você poderá usar um parâmetro de nome nulo no método search ().
 		} catch (NXTCommException e) {
 			// TODO Auto-generated catch block
@@ -148,7 +158,7 @@ public class PotatoEnvia {
 		NXTInfo[] nxtInfo = null;
 		try {
 			nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
-			nxtInfo = nxtComm.search("MYNXT");
+			nxtInfo = nxtComm.search("NXT");
 			//Se houver apenas um NXT conectado, você poderá usar um parâmetro de nome nulo no método search ().
 		} catch (NXTCommException e) {
 			// TODO Auto-generated catch block

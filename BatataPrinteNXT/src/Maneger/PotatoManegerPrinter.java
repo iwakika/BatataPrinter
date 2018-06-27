@@ -37,11 +37,9 @@ public class PotatoManegerPrinter {
 		MOVE_ESQUERDA;
 	}	
 
-	
-	
-	
+		
 
-	
+
 	private int getRotateCanetaSobeDesce_VelX(int velX) {
 		
 		int Xrotate =  (velX * CanetaSobeDesce_MotorRotate_100)/100 ;

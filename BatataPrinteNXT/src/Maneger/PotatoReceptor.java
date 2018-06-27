@@ -26,20 +26,23 @@ public class PotatoReceptor {
 	
 	public PotatoReceptor(int tipoConexao){
 		this.tipoConexao = tipoConexao;
+		conectar();
 	}
 	
 	public void conectar(){
 		
 		
-		
+		System.out.println("Ini Conexção");
 		  connection = null;
 		  	
 		 if(tipoConexao == NXTCommFactory.USB) {
 	
 		      connection = Bluetooth.waitForConnection();
+		      System.out.println("Conectado");
 		    } else {
 		      LCD.drawString("waiting for USB", 0,1 );
 		      connection = USB.waitForConnection();
+		      System.out.println("Conectado");
 		    }		 
 		 
 	}
@@ -59,14 +62,14 @@ public class PotatoReceptor {
 			}
 	 		list.add(x);
 	 		
-	   }while(x != -1);
+	   }while(x != 255);
 	 	
 		return list;
 	 	
 	}
 	
 	public int[][] montaMatriz(ArrayList<Integer> list) {
-		
+		System.out.println("montaMatriz");
 		int sizeI = list.get(0);
 		int sizeJ = list.get(1);
 		int contI = 0;
