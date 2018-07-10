@@ -8,7 +8,8 @@ public class ExecutaImpressaoPC {
 		
 		///Ler imagem
 		System.out.println("Inicia Leitura de Imagem");
-		PotatoImagem img = new PotatoImagem("Xalakom");
+		//PotatoImagem img = new PotatoImagem("Xalakom");
+		PotatoImagem img = new PotatoImagem("MainShip1");
 		///Gera matriz para impressão
 		System.out.println("GeraMatriz para Impressão");
 		int[][] matriz = img.transformaMatrizPB();  
@@ -19,7 +20,7 @@ public class ExecutaImpressaoPC {
 		PotatoEnvia pe = new PotatoEnvia(NXTCommFactory.USB);
 		
 		//envia dados da matriz
-		pe.enviaDados(matriz);	
+		pe.enviaDadosAcaoLista(matriz);	
 		
 		
 	}

@@ -11,10 +11,9 @@ import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.NXTCommConnector;
 import lejos.nxt.comm.NXTConnection;
 import lejos.nxt.comm.USB;
-import lejos.pc.comm.NXTCommFactory;
 
 public class PotatoReceptor {
-	private int  tipoConexao;
+	private Boolean conecaoUSB ;
 	private NXTConnection connection =null; 
 	
 	
@@ -24,8 +23,8 @@ public class PotatoReceptor {
 		
 	}
 	
-	public PotatoReceptor(int tipoConexao){
-		this.tipoConexao = tipoConexao;
+	public PotatoReceptor(Boolean ConecaoUSB){
+		this.conecaoUSB = ConecaoUSB;
 		conectar();
 	}
 	
@@ -35,7 +34,7 @@ public class PotatoReceptor {
 		System.out.println("Ini Conexção");
 		  connection = null;
 		  	
-		 if(tipoConexao == NXTCommFactory.USB) {
+		 if(!conecaoUSB ) {
 	
 		      connection = Bluetooth.waitForConnection();
 		      System.out.println("Conectado");
@@ -50,22 +49,32 @@ public class PotatoReceptor {
 	public ArrayList<Integer> recebeDados(){
 		   //DataOutputStream dataOut = connection.openDataOutputStream();
 		ArrayList<Integer> list = new ArrayList<Integer>();
+		System.out.println("Inicia = Recebe dados ");
 	 	DataInputStream dis = connection.openDataInputStream();
 	   int x = 0;
+	   int i = 0;
 	 	do{
 		   
 	 		try {
 				x = dis.read();
+				i++;
+				//System.out.println("Recebe:"+i);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.out.println("Erro ao receber");
 			}
 	 		list.add(x);
 	 		
 	   }while(x != 255);
+	 	System.out.println("Finaliza Recebe dados ");
 	 	
 		return list;
 	 	
+	}
+	
+	public void montaAcaoLista(ArrayList<Integer> list){
+		
 	}
 	
 	public int[][] montaMatriz(ArrayList<Integer> list) {

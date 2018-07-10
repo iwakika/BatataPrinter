@@ -2,6 +2,8 @@ package Maneger;
 
 import java.util.ArrayList;
 
+import org.apache.bcel.generic.RETURN;
+
 public class PotatoPrinter {
 	
 	
@@ -28,6 +30,23 @@ public class PotatoPrinter {
 		}
 		
 	}
+	
+	public static EnumImprime EnumImprimeEquivalente(int valor){
+		
+		if(valor == 0){
+			
+			return EnumImprime.NAO_DESENHA;
+		
+		}else if(valor == 1){
+			return EnumImprime.DESENHA;
+		}else if(valor == 2){
+			return EnumImprime.PROXIMA_LINHA;	
+		}else if(valor == 3){
+			return EnumImprime.FINALIZA;
+		}
+		return null;
+	}
+	
 	private PotatoPrinter(){
 		
 	}
@@ -36,7 +55,22 @@ public class PotatoPrinter {
 		if(pp == null){
 			pp = new PotatoPrinter();
 		}
+		
+		pmp = new PotatoManegerPrinter(100,100,100);
+		
 		matrizImpressao = matriz;
+		
+		return pp;
+	}
+	
+	public static PotatoPrinter Inicialize(){
+		if(pp == null){
+			pp = new PotatoPrinter();
+		}
+		
+		pmp = new PotatoManegerPrinter(100,100,100);
+		
+		
 		
 		return pp;
 	}
@@ -47,6 +81,8 @@ public class PotatoPrinter {
 	 */
 	public void imprimePontos() {
 		
+		pmp.AcaoMovimentaInicial();
+		
 		int sizeI = matrizImpressao.length;
 		int sizeJ = matrizImpressao[0].length;
 		
@@ -54,8 +90,8 @@ public class PotatoPrinter {
 			for(int j = 0; i <sizeJ; j++ ) {
 				
 				if(matrizImpressao[i][j] == 1) {
-					pmp.acaoMoveCanetaDesce();
-					pmp.acaoMoveCanetaSobe();					
+					pmp.acaoMoveCanetaDesceMetade();
+					pmp.acaoMoveCanetaSobeMetade();					
 				}
 				
 				//pmp.acaoMoveCanetaLateralDireita();
@@ -71,6 +107,9 @@ public class PotatoPrinter {
 	}
 	
 
+	/***
+	 * Executa a impressão a partir de uma matriz inicializada.
+	 */
 public void imprimeLinha() {
 		
 		int sizeI = matrizImpressao.length;
@@ -118,33 +157,64 @@ public void imprimeLinha() {
 			
 			//System.out.println(ExecutaimprimeLinhaTeste(acaoLista));
 		
-			ExecutaimprimeLinhaTeste(acaoLista);
+			ExecutaimprimeLinha(acaoLista);
 	}
+
+public String ExecutaimprimeLinhaInteger(ArrayList<Integer> acaoLista) {
+	String saida = "";
+	int acaoValor =0;
+	int linha = 0;
+	int x =0;
+	ArrayList<PotatoLinha> acaoListax = new ArrayList<PotatoLinha>();
+	for(int i = 0 ; i < acaoLista.size(); i++) {
+		
+		x = acaoLista.get(i);
+		if(i % 2 == 0){ // então é acão			
+			acaoValor  = x;
+		}else{
+			linha = x;
+			acaoListax.add(new PotatoLinha(linha, EnumImprimeEquivalente(acaoValor)));
+		}
+	}
+		
+		ExecutaimprimeLinha(acaoListax);
+		
+	
+	return saida;
+}
+
 
 private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 	String saida = "";
+	pmp.AcaoMovimentaInicial();
 	
 	for(PotatoLinha p : acaoLista) {
 		
 		switch (p.getAcao()) {
 		case DESENHA:
 			//saida+= String.format("%"+p.getLinha()+"s", "*").replace(' ', '*');
-			pmp.acaoMoveCanetaDesce();
+			System.out.println("Desenha");
+			pmp.acaoMoveCanetaDesceMetade();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());
 			
 			
 			break;
 		case NAO_DESENHA:
+			System.out.println("N_Desenha");
 			//saida +=" ";
-			pmp.acaoMoveCanetaSobe();
+			pmp.acaoMoveCanetaSobeMetade();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());			
 			
 			break;
 		case PROXIMA_LINHA:
-			pmp.acaoMovePapelFrente(1);
-			pmp.acaoEjetarPapel();
+			
+			//System.out.println("Proxima_Linha");
+			
+			pmp.acaoMoveCanetaProximaLinha();
+			//pmp.acaoEjetarPapel();
 			break;
 		case FINALIZA:
+			System.out.println("Finaliza");
 			pmp.acaoEjetarPapel();
 			break;			
 		default:
@@ -158,40 +228,5 @@ private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 }
 
 	
-
-	private String ExecutaimprimeLinhaTeste(ArrayList<PotatoLinha> acaoLista) {
-		String saida = "";
-		
-		for(PotatoLinha p : acaoLista) {
-			
-			switch (p.getAcao()) {
-			case DESENHA:				
-				
-				
-				//saida+= String.format("%"+p.getLinhaQtd()+"s", " ");
-	
-				
-				break;
-			case NAO_DESENHA:
-				//saida +=" ";
-				//saida+= String.format("%"+p.getLinhaQtd()+"s", " ");				
-				
-				
-				break;
-			case PROXIMA_LINHA:
-				saida +="\n";
-				break;
-			case FINALIZA:
-				break;
-
-			default:
-				break;
-			}
-			
-		}
-		
-		
-		return saida;
-	}
 
 }

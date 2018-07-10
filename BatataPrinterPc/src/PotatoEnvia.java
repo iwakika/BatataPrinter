@@ -3,9 +3,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.omg.CORBA.Environment;
+
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
@@ -49,6 +51,95 @@ public class PotatoEnvia {
 	}
 	
 	
+	/**Converte Os dados da matriz em uma lista de açoes antes de enviar
+	 * 
+	 * @param matrizImpressao
+	 */
+	public void enviaDadosAcaoLista(int[][] matrizImpressao){
+		
+		ArrayList<PotatoLinha> acaoLista  = converteMatrizParaAcao(matrizImpressao);
+		
+		try {
+			System.out.println("Inicia envio de dados");
+			 nxtComm.open(nxt);
+			 OutputStream dos = nxtComm.getOutputStream();
+			
+			 int x= 0;
+			 System.out.println("AcaoLista," + acaoLista.size());
+			 for (PotatoLinha potatoLinha : acaoLista) {
+				 dos.write(potatoLinha.getAcao().value);
+				 dos.write(potatoLinha.getLinha());
+				 x++;
+				 
+			}			
+			 
+			 dos.write(-1); //sinaliza final do envio
+			 dos.flush();
+			 dos.close();
+			 System.out.println("Finaliza Envio de Dados");
+			 
+			
+		} catch (NXTCommException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public ArrayList<PotatoLinha> converteMatrizParaAcao(int[][] matrizImpressao){
+		
+			
+			int sizeI = matrizImpressao.length;
+			int sizeJ = matrizImpressao[0].length;
+			ArrayList<PotatoLinha> acaoLista = new ArrayList<PotatoLinha>();
+			
+			EnumImprime statusAtual = null;
+			EnumImprime statusAnterior = null;
+			
+			int linhaTamanho = 0;
+			
+			for(int i = 0 ; i < sizeI; i++) {		
+				 
+				for(int j = 0; j <sizeJ; j++ ) {
+									
+					if(matrizImpressao[i][j] == EnumImprime.DESENHA.value) {
+						statusAtual = EnumImprime.DESENHA;
+					}else {
+						statusAtual = EnumImprime.NAO_DESENHA;					
+					}
+								
+						if(j>0) { // não passa por isso na primeira verificacao pois é apenas parafinalizara linha
+							if(statusAtual != statusAnterior) 
+							{
+								//finaliza acao anterioro
+								acaoLista.add(new PotatoLinha(linhaTamanho, statusAnterior));
+								linhaTamanho = 0;
+								statusAnterior = statusAtual;					
+							}
+						}else {
+							statusAnterior = statusAtual;
+						}
+						linhaTamanho++;	
+				}
+				
+				//imnprime a ultima cao da linha
+				acaoLista.add(new PotatoLinha(linhaTamanho, statusAnterior));
+				linhaTamanho = 0;	
+				statusAtual = null;
+				acaoLista.add(new PotatoLinha(0, EnumImprime.PROXIMA_LINHA));
+					
+				}
+				acaoLista.add(new PotatoLinha(0, EnumImprime.FINALIZA));
+				
+				return acaoLista;
+				//System.out.println(ExecutaimprimeLinhaTeste(acaoLista));
+	}
+
+	
+	
 	public void enviaDados(int[][] matriz){
 		try {
 			System.out.println("Inicia envio de dados");
@@ -60,10 +151,12 @@ public class PotatoEnvia {
 
 			 dos.write(sizeI);
 			 dos.write(sizeJ);
-			 
+			 int x= 0;
 			 for(int i = 0; i < sizeI ; i++){
 				 for(int j = 0; j < sizeJ; j++){
 					 dos.write(matriz[i][j]);
+					 x++;
+					 System.out.println("Enviando," + i + ","+j + ":" + x);
 					 //se der erro tentar enviar bytes
 				 }
 			 }
@@ -122,12 +215,14 @@ public class PotatoEnvia {
 	public void conectar() throws Exception{
 		System.out.println("Inicia Conexão");
 		NXTInfo[] nxtInfo = null;
+		
 		int cont = 0;
 		while(nxtInfo == null || cont == limiteTentativas ){
 			if(tipoConexao == NXTCommFactory.USB) {
-				buscaPorNxtUSB();
+				System.out.println("Busca USB");
+				nxtInfo = buscaPorNxtUSB();
 			}else{
-				buscaPorNXTBlueTooth();
+				nxtInfo = buscaPorNXTBlueTooth();
 			}
 			cont++;
 		}
@@ -135,6 +230,7 @@ public class PotatoEnvia {
 			 throw new Exception("Conexão não efetuada");
 		}else{		
 		nxt = nxtInfo[0];
+		System.out.println("Conecação efetuada com:"+ nxt);
 		}
 		
 	}
@@ -150,6 +246,7 @@ public class PotatoEnvia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("Retorna Info");
 		return nxtInfo;
 		
 	}
