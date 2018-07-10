@@ -19,12 +19,14 @@ public class PotatoManegerPrinter {
 	
 	}
 
-	private static int CanetaSobeDesce_MotorRotate_100 = 60; //movimento completo
+	private static int CanetaSobeDesce_MotorRotate_100 = 30; //movimento Desenho
+	public static int CanetaSobeDesce_MotorRotate_100_Completo = 30; //MovimentoLimite
+	
 	
 	private static int CanetaLateral_MotorRotate_100 = 20;//para mover 
 	private static int Papel_MotorRotate_100 = 20; //para mover 10 cm
 	
-	public static int desce_Inicial = 30;
+	
 	public static int Papel_largura_UN = 55;
 			
 
@@ -57,16 +59,21 @@ public class PotatoManegerPrinter {
 	 * Prepara a caneta para o inicio da impreção
 	 */
 	public void AcaoMovimentaInicial(){
-		acaoMoveCanetaDesceMetade();
-		acaoMoveCanetaLateralDireita(Papel_largura_UN);
+		acaoMoveCanetaDesce(CanetaSobeDesce_MotorRotate_100_Completo);
+		acaoMoveCanetaLateralDireita(Papel_largura_UN);// movimenta a caneta para direita o maximo possivel
 	}
 	
-	public void AcaoMovimentaFinal(){
-		acaoMoveCanetaSobeMetade();
+	public void AcaoMovimentaFinal(){		
 		acaoMoveCanetaLateralEsquerda(Papel_largura_UN);
-		acaoMoveCanetaLateralDireita(Papel_largura_UN/2);
+		acaoMoveCanetaLateralDireita(Papel_largura_UN/2);//posiciona caneta ao meio
+		acaoMoveCanetaSobe(CanetaSobeDesce_MotorRotate_100_Completo);
 	}
 
+	public void acaoMoveCanetaProximaLinha(){
+		acaoMoveCanetaSobe();
+		acaoMovePapelFrente(1);
+		acaoMoveCanetaLateralDireita(Papel_largura_UN);
+	}
 		
 
 
@@ -117,25 +124,16 @@ public class PotatoManegerPrinter {
 		}
 		
 	}
-	/**
-	 * Move caneta o suficiente para sair do papel, se a caneta já estiver posicionada na posição não faz nada
-	 */
-	public void acaoMoveCanetaSobeMetade() {
+	
+	public void acaoMoveCanetaSobe(int rotateX) {
 		
-		if(statusAtualSobeDesce != CanetaAcao.SOBE) {
-		int rotateX = getRotateCanetaSobeDesce_VelX(velocidadeCanetaSobeDesce);	
-		
-			if(statusAtualSobeDesce == CanetaAcao.DESCE){
-				statusAtualSobeDesce = CanetaAcao.MEIO;
-			}else if(statusAtualSobeDesce == CanetaAcao.SOBE_METADE){	
-			statusAtualSobeDesce = CanetaAcao.SOBE;
-			}
-			
-		rotacionaMotorCanetaSobeDesce(-rotateX/2);
-		}
+		if(statusAtualSobeDesce != CanetaAcao.SOBE) {				
+		statusAtualSobeDesce = CanetaAcao.SOBE;
+		rotacionaMotorCanetaSobeDesce(-rotateX);
 		
 		}
 		
+	}	
 	
 
 
@@ -160,23 +158,16 @@ public class PotatoManegerPrinter {
 		
 	}
 	
-	public void acaoMoveCanetaDesceMetade() {
-		if(statusAtualSobeDesce != CanetaAcao.DESCE) {
-			//System.out.println( CanetaAcao.DESCE);
-		int rotateX = getRotateCanetaSobeDesce_VelX(velocidadeCanetaSobeDesce);		
-	//
+	public void acaoMoveCanetaDesce(int rotateX) {
+		if(statusAtualSobeDesce != CanetaAcao.DESCE) {					
+			statusAtualSobeDesce = CanetaAcao.DESCE;		
 		
-		if(statusAtualSobeDesce == CanetaAcao.SOBE){
-			statusAtualSobeDesce = CanetaAcao.MEIO;
-		}else if(statusAtualSobeDesce == CanetaAcao.DESCE_METADE){	
-		statusAtualSobeDesce = CanetaAcao.DESCE_METADE;
-		}
-		System.out.println(rotateX/2);
-		rotacionaMotorCanetaSobeDesce(rotateX/2);
+		rotacionaMotorCanetaSobeDesce(rotateX);
 		
 		}
 		
 	}
+
 	
 	
 /**
@@ -217,10 +208,6 @@ public class PotatoManegerPrinter {
 		rotacionaMotorPapel(-rotateX * un);
 	}
 	
-	public void acaoMoveCanetaProximaLinha(){
-		
-		acaoMovePapelFrente(1);
-	}
 	
 	
 	

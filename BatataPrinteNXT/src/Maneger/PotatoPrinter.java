@@ -90,8 +90,8 @@ public class PotatoPrinter {
 			for(int j = 0; i <sizeJ; j++ ) {
 				
 				if(matrizImpressao[i][j] == 1) {
-					pmp.acaoMoveCanetaDesceMetade();
-					pmp.acaoMoveCanetaSobeMetade();					
+					pmp.acaoMoveCanetaDesce();
+					pmp.acaoMoveCanetaSobe();					
 				}
 				
 				//pmp.acaoMoveCanetaLateralDireita();
@@ -194,7 +194,7 @@ private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 		case DESENHA:
 			//saida+= String.format("%"+p.getLinha()+"s", "*").replace(' ', '*');
 			System.out.println("Desenha");
-			pmp.acaoMoveCanetaDesceMetade();
+			pmp.acaoMoveCanetaDesce();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());
 			
 			
@@ -202,7 +202,7 @@ private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 		case NAO_DESENHA:
 			System.out.println("N_Desenha");
 			//saida +=" ";
-			pmp.acaoMoveCanetaSobeMetade();
+			pmp.acaoMoveCanetaSobe();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());			
 			
 			break;
