@@ -72,7 +72,7 @@ public class PotatoReceptor {
 			}
 	 		list.add(x);
 	 		/// Limita a leitura para não estourar a memória do brick, ou terminou a leitura
-	   }while(x != 255 || i > 1000);
+	   }while(x != 255 || i < 1000);
 	 	System.out.println("Finaliza Recebe dados ");
 	 	
 		return list;

@@ -1,6 +1,7 @@
 package Maneger;
 
 
+import lejos.nxt.ColorSensor;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
@@ -25,7 +26,7 @@ public class PotatoManegerPrinter {
 	
 	
 	private static int CanetaLateral_MotorRotate_100 = 20;//para mover 
-	private static int Papel_MotorRotate_100 = 20; //para mover 10 cm
+	private static int Papel_MotorRotate_100 = 22; //para mover 10 cm
 	
 	
 	public static int Papel_largura_UN = 55;
@@ -36,6 +37,7 @@ public class PotatoManegerPrinter {
 	private static NXTRegulatedMotor motorPapel = Motor.C;
 	
 	private static LightSensor sensorLuz = new LightSensor(SensorPort.S1);
+	private static ColorSensor sensoColor = new ColorSensor(SensorPort.S2);
 	private static TouchSensor sensorToque = new TouchSensor(SensorPort.S2);
 
 	private int velocidadeCanetaSobeDesce = 100;
@@ -43,6 +45,9 @@ public class PotatoManegerPrinter {
 	private int velocidadePapel = 100;
 	
 	private int valorLuzComPapel =45;
+	
+	
+	private int posicaoLinha = 0;
 	
 	private CanetaAcao statusAtualSobeDesce = CanetaAcao.SOBE;
 	
@@ -70,10 +75,16 @@ public class PotatoManegerPrinter {
 		acaoMoveCanetaSobe(CanetaSobeDesce_MotorRotate_100_Completo);
 	}
 
+	/**
+	 * Move a caneta a quantidade de linhas que ela se movimentou ao desenhar na direcao oposta
+	 */
 	public void acaoMoveCanetaProximaLinha(){
+		posicaoLinha = 0;
 		acaoMoveCanetaSobe();
 		acaoMovePapelTraz(2);
-		acaoMoveCanetaLateralDireita(Papel_largura_UN/2);
+		//acaoMoveCanetaLateralDireita(Papel_largura_UN);
+		acaoMoveCanetaLateralDireita(posicaoLinha +5);
+		posicaoLinha = 0;
 	}
 		
 
@@ -175,6 +186,7 @@ public class PotatoManegerPrinter {
  */
 	public void acaoMoveCanetaProximo(int un) {
 		acaoMoveCanetaLateralEsquerda(un);
+		posicaoLinha += un;
 	}
 
 	
@@ -234,6 +246,18 @@ public class PotatoManegerPrinter {
 		System.out.println("SesorLuz" + valorLuz);
 		
 		if(valorLuz >= valorLuzComPapel) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean verificaExistePapel2() {
+		
+		int valorCor = sensoColor.getLightValue();
+		System.out.println("SesorCor" + valorCor);
+		
+		if(valorCor >= valorLuzComPapel) {
 			return true;
 		}else {
 			return false;

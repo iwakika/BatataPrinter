@@ -27,7 +27,9 @@ public class TesteCalibragem {
 				
 				while (true)
 				{
-				pmp.verificaExistePapel();
+				//pmp.verificaExistePapel();
+				pmp.verificaExistePapel2();
+				
 				}
 				
 				

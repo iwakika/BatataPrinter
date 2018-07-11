@@ -21,6 +21,7 @@ public class ExecutaImpreNXT {
 			concluidaImpressao = pp.ExecutaimprimeLinhaInteger(acaoLista);
 		}
 		
+		
 
 	}
 

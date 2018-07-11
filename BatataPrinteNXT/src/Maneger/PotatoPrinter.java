@@ -214,7 +214,9 @@ private boolean ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 			break;
 		case FINALIZA:
 			System.out.println("Finaliza");
+			
 			pmp.acaoEjetarPapel();
+			pmp.AcaoMovimentaFinal();
 			saida = true;
 			break;			
 		default:
