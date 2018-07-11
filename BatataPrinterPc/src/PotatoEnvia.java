@@ -129,9 +129,10 @@ public class PotatoEnvia {
 				acaoLista.add(new PotatoLinha(linhaTamanho, statusAnterior));
 				linhaTamanho = 0;	
 				statusAtual = null;
-				acaoLista.add(new PotatoLinha(0, EnumImprime.PROXIMA_LINHA));
+				acaoLista.add(new PotatoLinha(0, EnumImprime.PROXIMA_LINHA));				
 					
 				}
+			acaoLista = otimizaAcaoLinha(acaoLista);
 				acaoLista.add(new PotatoLinha(0, EnumImprime.FINALIZA));
 				
 				return acaoLista;
@@ -139,7 +140,54 @@ public class PotatoEnvia {
 	}
 
 	
+	/**
+	 * 
+	 * @param acaoLista
+	 */
+	private ArrayList<PotatoLinha> otimizaAcaoLinha(ArrayList<PotatoLinha> acaoLista) {
+		
+		ArrayList<PotatoLinha> acaoListaOtimizada = new ArrayList<PotatoLinha>();
+		
+		
+		EnumImprime x1 = null;
+		EnumImprime x2 = null;
+		
+		for(int i = 0 ; i < acaoLista.size()-1 ; i++){
+			
+			x1 = acaoLista.get(i).getAcao();
+			x2 = acaoLista.get(i+1).getAcao();
+
+			System.out.println(acaoLista.get(i).getAcao());
+			if(x1 == EnumImprime.NAO_DESENHA && x2 == EnumImprime.PROXIMA_LINHA){
+				acaoLista.get(i).setAcao(EnumImprime.INGNORA);
+			}else{
+				acaoListaOtimizada.add(acaoLista.get(i));
+			}
+			
+		}
+		
+		System.out.println("----------");
+		
+		//for (PotatoLinha potatoLinha : acaoListaOtimizada) {
+			
+		//	System.out.println(potatoLinha.getAcao());
+			
+		//}
+			
+		
+		
+		return acaoListaOtimizada;
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
 	
+	/**
+	 * Envia a matriz de imagem em forma de um array para o Robo
+	 * @param matriz
+	 */
+
 	public void enviaDados(int[][] matriz){
 		try {
 			System.out.println("Inicia envio de dados");

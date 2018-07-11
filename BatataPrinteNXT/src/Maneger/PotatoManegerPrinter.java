@@ -19,8 +19,9 @@ public class PotatoManegerPrinter {
 	
 	}
 
-	private static int CanetaSobeDesce_MotorRotate_100 = 30; //movimento Desenho
-	public static int CanetaSobeDesce_MotorRotate_100_Completo = 30; //MovimentoLimite
+	private static int CanetaSobeDesce_MotorRotate_100 = 20; //movimento Desenho
+	public static int CanetaSobeDesce_MotorRotate_100_Completo = 60; //MovimentoLimite
+	public static int CanetaSobeDesce_MotorRotate_100_Incial = 43; //MovimentoLimite
 	
 	
 	private static int CanetaLateral_MotorRotate_100 = 20;//para mover 
@@ -41,7 +42,7 @@ public class PotatoManegerPrinter {
 	private int velocidadeCanetaLateral = 100;
 	private int velocidadePapel = 100;
 	
-	private int valorLuzComPapel =100;
+	private int valorLuzComPapel =45;
 	
 	private CanetaAcao statusAtualSobeDesce = CanetaAcao.SOBE;
 	
@@ -59,8 +60,8 @@ public class PotatoManegerPrinter {
 	 * Prepara a caneta para o inicio da impreção
 	 */
 	public void AcaoMovimentaInicial(){
-		acaoMoveCanetaDesce(CanetaSobeDesce_MotorRotate_100_Completo);
-		acaoMoveCanetaLateralDireita(Papel_largura_UN);// movimenta a caneta para direita o maximo possivel
+		acaoMoveCanetaDesce(CanetaSobeDesce_MotorRotate_100_Incial);
+		acaoMoveCanetaLateralDireita(Papel_largura_UN/2);// movimenta a caneta para direita o maximo possivel
 	}
 	
 	public void AcaoMovimentaFinal(){		
@@ -71,8 +72,8 @@ public class PotatoManegerPrinter {
 
 	public void acaoMoveCanetaProximaLinha(){
 		acaoMoveCanetaSobe();
-		acaoMovePapelFrente(1);
-		acaoMoveCanetaLateralDireita(Papel_largura_UN);
+		acaoMovePapelTraz(2);
+		acaoMoveCanetaLateralDireita(Papel_largura_UN/2);
 	}
 		
 
@@ -160,8 +161,7 @@ public class PotatoManegerPrinter {
 	
 	public void acaoMoveCanetaDesce(int rotateX) {
 		if(statusAtualSobeDesce != CanetaAcao.DESCE) {					
-			statusAtualSobeDesce = CanetaAcao.DESCE;		
-		
+			//statusAtualSobeDesce = CanetaAcao.DESCE;				
 		rotacionaMotorCanetaSobeDesce(rotateX);
 		
 		}

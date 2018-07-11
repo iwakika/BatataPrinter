@@ -1,7 +1,5 @@
 package Maneger;
 
-import Maneger.PotatoManegerPrinter.CanetaAcao;
-
 public class TesteCalibragem {
 
 	public static void main(String[] args) {
@@ -27,11 +25,11 @@ public class TesteCalibragem {
 				//pmp.acaoMoveCanetaLateralEsquerda(55);
 				//pmp.acaoMoveCanetaLateralDireita(55);
 				
-				/*while (true)
+				while (true)
 				{
 				pmp.verificaExistePapel();
 				}
-				*/
+				
 				
 	}
 

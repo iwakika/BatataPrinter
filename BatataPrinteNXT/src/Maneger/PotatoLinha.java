@@ -1,7 +1,5 @@
 package Maneger;
 
-import Maneger.PotatoPrinter.EnumImprime;
-
 public class PotatoLinha {
 	
 	private int linhaQtd;

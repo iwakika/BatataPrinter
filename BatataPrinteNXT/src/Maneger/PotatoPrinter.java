@@ -16,20 +16,7 @@ public class PotatoPrinter {
 	private static PotatoPrinter pp;
 	
 	
-	public enum EnumImprime{		
-		
-		NAO_DESENHA(0),
-		DESENHA(1),
-		PROXIMA_LINHA(2),
-		FINALIZA(3);
-		
-		int value;
-		EnumImprime(int i) {
-			this.value = i;
-		
-		}
-		
-	}
+
 	
 	public static EnumImprime EnumImprimeEquivalente(int valor){
 		
@@ -43,6 +30,8 @@ public class PotatoPrinter {
 			return EnumImprime.PROXIMA_LINHA;	
 		}else if(valor == 3){
 			return EnumImprime.FINALIZA;
+		}else if(valor == 4){
+			return EnumImprime.ignora;
 		}
 		return null;
 	}
@@ -50,7 +39,11 @@ public class PotatoPrinter {
 	private PotatoPrinter(){
 		
 	}
-	
+	/**
+	 * Instancia os parametros de Impressão.
+	 * @param matriz
+	 * @return
+	 */
 	public static PotatoPrinter Inicialize(int[][] matriz){
 		if(pp == null){
 			pp = new PotatoPrinter();
@@ -160,8 +153,14 @@ public void imprimeLinha() {
 			ExecutaimprimeLinha(acaoLista);
 	}
 
-public String ExecutaimprimeLinhaInteger(ArrayList<Integer> acaoLista) {
-	String saida = "";
+
+/**
+ * Executa a impressão ao finalizar retorna verdadeiro senão retorna falso
+ * @param acaoLista
+ * @return
+ */
+public boolean ExecutaimprimeLinhaInteger(ArrayList<Integer> acaoLista) {
+	Boolean saida = false;
 	int acaoValor =0;
 	int linha = 0;
 	int x =0;
@@ -177,15 +176,15 @@ public String ExecutaimprimeLinhaInteger(ArrayList<Integer> acaoLista) {
 		}
 	}
 		
-		ExecutaimprimeLinha(acaoListax);
+		saida = ExecutaimprimeLinha(acaoListax);
 		
 	
 	return saida;
 }
 
 
-private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
-	String saida = "";
+private boolean ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
+	boolean saida = false;
 	pmp.AcaoMovimentaInicial();
 	
 	for(PotatoLinha p : acaoLista) {
@@ -193,14 +192,14 @@ private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 		switch (p.getAcao()) {
 		case DESENHA:
 			//saida+= String.format("%"+p.getLinha()+"s", "*").replace(' ', '*');
-			System.out.println("Desenha");
+			//System.out.println("Desenha");
 			pmp.acaoMoveCanetaDesce();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());
 			
 			
 			break;
 		case NAO_DESENHA:
-			System.out.println("N_Desenha");
+			//System.out.println("N_Desenha");
 			//saida +=" ";
 			pmp.acaoMoveCanetaSobe();
 			pmp.acaoMoveCanetaProximo(p.getLinhaQtd());			
@@ -216,6 +215,7 @@ private String ExecutaimprimeLinha(ArrayList<PotatoLinha> acaoLista) {
 		case FINALIZA:
 			System.out.println("Finaliza");
 			pmp.acaoEjetarPapel();
+			saida = true;
 			break;			
 		default:
 			break;

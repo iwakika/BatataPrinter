@@ -46,6 +46,10 @@ public class PotatoReceptor {
 		 
 	}
 	
+	/**
+	 * Recebe  dados do byte a byte até terminar todos dados para ler ou
+	 * @return
+	 */
 	public ArrayList<Integer> recebeDados(){
 		   //DataOutputStream dataOut = connection.openDataOutputStream();
 		ArrayList<Integer> list = new ArrayList<Integer>();
@@ -56,17 +60,19 @@ public class PotatoReceptor {
 	 	do{
 		   
 	 		try {
+	 			 
 				x = dis.read();
 				i++;
-				//System.out.println("Recebe:"+i);
+				System.out.println("Recebe:"+i);
+	 			
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.println("Erro ao receber");
 			}
 	 		list.add(x);
-	 		
-	   }while(x != 255);
+	 		/// Limita a leitura para não estourar a memória do brick, ou terminou a leitura
+	   }while(x != 255 || i > 1000);
 	 	System.out.println("Finaliza Recebe dados ");
 	 	
 		return list;
