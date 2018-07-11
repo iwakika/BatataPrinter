@@ -79,7 +79,7 @@ public class PotatoManegerPrinter {
 	 * Move a caneta a quantidade de linhas que ela se movimentou ao desenhar na direcao oposta
 	 */
 	public void acaoMoveCanetaProximaLinha(){
-		posicaoLinha = 0;
+		
 		acaoMoveCanetaSobe();
 		acaoMovePapelTraz(2);
 		//acaoMoveCanetaLateralDireita(Papel_largura_UN);
