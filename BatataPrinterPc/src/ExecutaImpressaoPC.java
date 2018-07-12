@@ -8,7 +8,7 @@ public class ExecutaImpressaoPC {
 		
 		///Ler imagem
 		System.out.println("Inicia Leitura de Imagem");
-		//PotatoImagem img = new PotatoImagem("Xalakom");
+		//dPotatoImagem img = new PotatoImagem("Xalakom");
 		PotatoImagem img = new PotatoImagem("MainShip1");
 		///Gera matriz para impressão
 		System.out.println("GeraMatriz para Impressão");

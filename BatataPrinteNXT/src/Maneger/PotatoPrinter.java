@@ -165,6 +165,8 @@ public boolean ExecutaimprimeLinhaInteger(ArrayList<Integer> acaoLista) {
 	int linha = 0;
 	int x =0;
 	ArrayList<PotatoLinha> acaoListax = new ArrayList<PotatoLinha>();
+	
+	//Converte para uma lista de PotatoLinha
 	for(int i = 0 ; i < acaoLista.size(); i++) {
 		
 		x = acaoLista.get(i);

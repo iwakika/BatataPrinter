@@ -37,8 +37,8 @@ public class PotatoManegerPrinter {
 	private static NXTRegulatedMotor motorPapel = Motor.C;
 	
 	private static LightSensor sensorLuz = new LightSensor(SensorPort.S1);
-	private static ColorSensor sensoColor = new ColorSensor(SensorPort.S2);
-	private static TouchSensor sensorToque = new TouchSensor(SensorPort.S2);
+	//private static ColorSensor sensoColor = new ColorSensor(SensorPort.S2);
+	//private static TouchSensor sensorToque = new TouchSensor(SensorPort.S2);
 
 	private int velocidadeCanetaSobeDesce = 100;
 	private int velocidadeCanetaLateral = 100;
@@ -250,20 +250,7 @@ public class PotatoManegerPrinter {
 		}else {
 			return false;
 		}
-	}
-	
-	public boolean verificaExistePapel2() {
-		
-		int valorCor = sensoColor.getLightValue();
-		System.out.println("SesorCor" + valorCor);
-		
-		if(valorCor >= valorLuzComPapel) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
+	}	
 	
 	private String valorLuz() {
 		// TODO Auto-generated method stub
